@@ -8,8 +8,6 @@ import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-import java.util.logging.Logger;
-
 @Configuration
 @RequiredArgsConstructor
 @Slf4j
