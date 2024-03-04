@@ -18,32 +18,31 @@ import static com.basic.kafka.producer.kafka.constant.KafkaConstant.*;
 @Slf4j
 public class ManageUserProducer {
 
-    private final KafkaTemplate<String, UserInfo> kafkaTemplate;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
 
     public void createUserProducer(UserInfo userInfo) {
-        Message<UserInfo> message = MessageBuilder
-                .withPayload(userInfo)
-                .setHeader(KafkaHeaders.TOPIC, CREATE_USER_INFO_TOPIC)
-                .build();
+        var message = buildPayloadMessage(userInfo, CREATE_USER_INFO_TOPIC, KAFKA_HEADER_TYPE_VALUE_CREATE);
         kafkaTemplate.send(message);
         log.info("Producer: Create user info success :: {}", userInfo);
     }
 
     public void updateUserProducer(UpdateUserInfo updateUserInfo) {
-        Message<UpdateUserInfo> message = MessageBuilder
-                .withPayload(updateUserInfo)
-                .setHeader(KafkaHeaders.TOPIC, UPDATE_USER_INFO_TOPIC)
-                .build();
+        var message = buildPayloadMessage(updateUserInfo, UPDATE_USER_INFO_TOPIC, KAFKA_HEADER_TYPE_VALUE_UPDATE);
         kafkaTemplate.send(message);
         log.info("Producer: Update user info success :: {}", updateUserInfo);
     }
 
     public void deleteUserProducer(ReadUserInfo readUserInfo) {
-        Message<ReadUserInfo> message = MessageBuilder
-                .withPayload(readUserInfo)
-                .setHeader(KafkaHeaders.TOPIC, DELETE_USER_INFO_TOPIC)
-                .build();
+        var message = buildPayloadMessage(readUserInfo, DELETE_USER_INFO_TOPIC, KAFKA_HEADER_TYPE_VALUE_DELETE);
         kafkaTemplate.send(message);
         log.info("Producer: Delete user info success :: {}", readUserInfo);
+    }
+
+    private <T> Message<T> buildPayloadMessage(T payloadBody, String topic, String type) {
+        return MessageBuilder
+                .withPayload(payloadBody)
+                .setHeader(KafkaHeaders.TOPIC, topic)
+                .setHeader(KAFKA_HEADER_TYPE_KEY, type)
+                .build();
     }
 }
