@@ -29,7 +29,7 @@ public class WebClientConfig {
 
     private ExchangeFilterFunction logResponse() {
         return ExchangeFilterFunction.ofResponseProcessor(clientResponse -> {
-            log.info("Response: " + clientResponse.statusCode());
+            log.info("Response status: " + clientResponse.statusCode());
             return clientResponse.bodyToMono(String.class)
                     .doOnNext(responseBody -> log.info("Response Body: " + responseBody))
                     .map(body -> clientResponse.mutate().body(body).build());

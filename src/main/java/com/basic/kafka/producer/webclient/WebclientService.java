@@ -24,5 +24,4 @@ public class WebclientService {
                 .bodyToMono(UserInfo.class)
                 .block();
     }
-
 }

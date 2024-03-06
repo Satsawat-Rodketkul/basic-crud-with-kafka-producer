@@ -1,7 +1,6 @@
 package com.basic.kafka.producer.controller;
 
 import com.basic.kafka.producer.models.ReadUserInfo;
-import com.basic.kafka.producer.models.UpdateUserInfo;
 import com.basic.kafka.producer.models.UserInfo;
 import com.basic.kafka.producer.service.CreateUserService;
 import com.basic.kafka.producer.service.DeleteUserService;
@@ -35,8 +34,8 @@ public class ManageUserInfoController {
     }
 
     @PostMapping("/update")
-    public ResponseEntity<String> updateUserInfo(@RequestBody UpdateUserInfo updateUserInfo) {
-        return updateUserService.updateUser(updateUserInfo);
+    public ResponseEntity<String> updateUserInfo(@RequestBody UserInfo userInfo) {
+        return updateUserService.updateUser(userInfo);
     }
 
     @PostMapping("/delete")

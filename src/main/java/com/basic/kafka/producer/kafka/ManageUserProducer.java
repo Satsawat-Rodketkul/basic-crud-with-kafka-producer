@@ -1,7 +1,7 @@
 package com.basic.kafka.producer.kafka;
 
+import com.basic.kafka.producer.component.CommonComponent;
 import com.basic.kafka.producer.models.ReadUserInfo;
-import com.basic.kafka.producer.models.UpdateUserInfo;
 import com.basic.kafka.producer.models.UserInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,8 @@ import static com.basic.kafka.producer.kafka.constant.KafkaConstant.*;
 @Slf4j
 public class ManageUserProducer {
 
-    private final KafkaTemplate<String, Object> kafkaTemplate;
+    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final CommonComponent commonComponent;
 
     public void createUserProducer(UserInfo userInfo) {
         var message = buildPayloadMessage(userInfo, CREATE_USER_INFO_TOPIC, KAFKA_HEADER_TYPE_VALUE_CREATE);
@@ -26,10 +27,10 @@ public class ManageUserProducer {
         log.info("Producer: Create user info success :: {}", userInfo);
     }
 
-    public void updateUserProducer(UpdateUserInfo updateUserInfo) {
-        var message = buildPayloadMessage(updateUserInfo, UPDATE_USER_INFO_TOPIC, KAFKA_HEADER_TYPE_VALUE_UPDATE);
+    public void updateUserProducer(UserInfo userInfo) {
+        var message = buildPayloadMessage(userInfo, UPDATE_USER_INFO_TOPIC, KAFKA_HEADER_TYPE_VALUE_UPDATE);
         kafkaTemplate.send(message);
-        log.info("Producer: Update user info success :: {}", updateUserInfo);
+        log.info("Producer: Update user info success :: {}", userInfo);
     }
 
     public void deleteUserProducer(ReadUserInfo readUserInfo) {
@@ -38,9 +39,9 @@ public class ManageUserProducer {
         log.info("Producer: Delete user info success :: {}", readUserInfo);
     }
 
-    private <T> Message<T> buildPayloadMessage(T payloadBody, String topic, String type) {
+    private <T> Message<String> buildPayloadMessage(T payloadBody, String topic, String type) {
         return MessageBuilder
-                .withPayload(payloadBody)
+                .withPayload(commonComponent.convertObjectToJson(payloadBody))
                 .setHeader(KafkaHeaders.TOPIC, topic)
                 .setHeader(KAFKA_HEADER_TYPE_KEY, type)
                 .build();
