@@ -1,0 +1,82 @@
+{
+	"info": {
+		"_postman_id": "3d06b617-c8b1-4edb-bb85-7a007508b2ca",
+		"name": "crud-kafka",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "18314473"
+	},
+	"item": [
+		{
+			"name": "localhost:8080/manage/v1/user/create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstname\": \"test\",\n    \"lastname\": \"test1\",\n    \"email\": \"test@mail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/manage/v1/user/create"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/manage/v1/user/read",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"test@mail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/manage/v1/user/read"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/manage/v1/user/update",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstname\": \"mock\",\n    \"lastname\": \"test1\",\n    \"email\": \"test@mail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/manage/v1/user/update"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/manage/v1/user/delete",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"test@mail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/manage/v1/user/delete"
+			},
+			"response": []
+		}
+	]
+}
